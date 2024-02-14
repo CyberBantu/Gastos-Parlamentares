@@ -13,8 +13,9 @@ dados = pd.json_normalize(resp['dados'])
 st.set_page_config(layout="wide")
 
 
-st.title("Painel de Gastos de Deputados do Brasil (2023 - 24)")
+st.title("Painel de Gastos de Deputados Federais - Legislatura 2022.")
 st.caption('Fonte - Camara dos Deputados / Elaborado por Christian Basilio - Dados Marginais')
+st.info("Os gastos parlamentares listados abaixo referem-se aos últimos 6 meses.")
 
 # Criando um selecionados
 nomes_unicos = dados["nome"].unique()
