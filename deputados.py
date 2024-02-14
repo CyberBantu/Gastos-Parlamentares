@@ -66,9 +66,10 @@ if not tabela_deputado.empty:
 
         # Criando a sidebar
         st.subheader(f"Informações de {deputy_name}")
-        st.text(f"Partido: {dados['siglaPartido'].iloc[0]}")
-        st.text(f"Partido: {dados['siglaUf'].iloc[0]}")
-        st.text(f"UF: {dados['email'].iloc[0]}")
+        st.text(f"Partido: {tabela_deputado['siglaPartido'].iloc[0]}")
+        st.text(f"Estado: {tabela_deputado['siglaUf'].iloc[0]}")
+        st.text(f"Email: {tabela_deputado['email'].iloc[0]}")
+        
         st.image(url_foto, width=150)
 
         # card com a soma do valorLiquido
@@ -76,10 +77,12 @@ if not tabela_deputado.empty:
         st.info(f"Total Valor Líquido: R$ {total_valor_liquido:.2f}")
 
         # Card de valor liquido
-        sum_by_tipo_despesa = dados_gastos.groupby('Tipo de Despesa')['Valor Líquido'].apply(lambda x: x.str.replace('R$', '').str.replace(',', '').astype(float).sum())
+        soma_tipo_dispensa = dados_gastos.groupby('Tipo de Despesa')['Valor Líquido'].apply(lambda x: x.str.replace('R$', '').str.replace(',', '').astype(float).sum())
         st.info("Total Valor Líquido por Tipo de Despesa:")
-        for tipo_despesa, total_valor in sum_by_tipo_despesa.items():
+        for tipo_despesa, total_valor in soma_tipo_dispensa.items():
             st.info(f"{tipo_despesa}: R$ {total_valor:.2f}")
+        
+        dados_gastos = dados_gastos.sort_values(by='Data do Documento', ascending=True)
 
         st.dataframe(dados_gastos)  
     else:
@@ -88,3 +91,5 @@ else:
     st.warning(f"Não há informações para o deputado {deputy_name}")
 
 st.caption('Elaborado por Christian Basilio (Dados Marginais)')
+
+
